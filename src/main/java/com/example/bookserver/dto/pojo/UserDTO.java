@@ -1,4 +1,4 @@
-package com.example.bookserver.dto;
+package com.example.bookserver.dto.pojo;
 
 import com.example.bookserver.model.Role;
 

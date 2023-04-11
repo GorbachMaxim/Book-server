@@ -3,16 +3,17 @@ package com.example.bookserver.controller;
 import com.example.bookserver.dto.MessageResponse;
 import com.example.bookserver.dto.Password;
 import com.example.bookserver.dto.SignupRequest;
-import com.example.bookserver.dto.UserDTO;
+import com.example.bookserver.dto.pojo.UserDTO;
 import com.example.bookserver.model.Book;
 import com.example.bookserver.model.ERole;
 import com.example.bookserver.model.Role;
 import com.example.bookserver.model.User;
-import com.example.bookserver.repository.BookRepository;
 import com.example.bookserver.repository.RoleRepository;
 import com.example.bookserver.repository.UserRepository;
+import com.example.bookserver.service.BookService;
 import com.example.bookserver.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,22 +27,23 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
+
 @CrossOrigin
 public class UserController {
 
-    private final UserDetailsServiceImpl userService;
+    @Autowired
+    private UserDetailsServiceImpl userService;
 
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private BookService bookService;
 
-    private final UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
-    private final BookRepository bookRepository;
-
-
-    private final RoleRepository roleRepository;
-
-
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @GetMapping("/user/{id}")
@@ -172,7 +174,7 @@ public class UserController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> addReadBook(HttpServletRequest request, @PathVariable long id){
         User user = userService.getUserFromJWT(request);
-        Book book = bookRepository.findById(id).orElseThrow();
+        Book book = bookService.getBookById(id);
         user.getReadBooks().add(book);
         userService.saveOrUpdate(user);
         return ResponseEntity.ok(new MessageResponse("User read book: " + book.getName()));
@@ -182,7 +184,7 @@ public class UserController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> deleteReadBook(HttpServletRequest request, @PathVariable long id){
         User user = userService.getUserFromJWT(request);
-        Book book = bookRepository.findById(id).orElseThrow();
+        Book book = bookService.getBookById(id);
         user.getReadBooks().remove(book);
         userService.saveOrUpdate(user);
         return ResponseEntity.ok(new MessageResponse("User delete read book: " + book.getName()));

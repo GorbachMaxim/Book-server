@@ -17,7 +17,9 @@ public class Author {
 
     private String surname;
 
+    @Column(columnDefinition="VARCHAR")
+    private String image;
+
+    @Column(columnDefinition="VARCHAR")
     private String biography;
-
-
 }

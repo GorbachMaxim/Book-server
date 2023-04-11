@@ -1,13 +1,9 @@
 package com.example.bookserver.model;
 
 
-import com.example.bookserver.dto.UserDTO;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +18,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -43,6 +38,7 @@ public class User {
 
     private String email;
 
+    @JsonIgnore
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",

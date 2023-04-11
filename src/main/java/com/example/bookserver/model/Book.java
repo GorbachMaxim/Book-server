@@ -1,6 +1,7 @@
 package com.example.bookserver.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,9 +9,11 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "book")
+@Table(name = "book",
+        uniqueConstraints = {
+        @UniqueConstraint(columnNames = "ISBN")
+})
 public class Book {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,10 +26,12 @@ public class Book {
 
     private String ISBN;
 
-    private long totalRate;
+    @Column(columnDefinition="VARCHAR")
+    private String description;
 
-    private long totalRateNumber;
+    @Column(columnDefinition="VARCHAR")
+    private String image;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Comment> comments;
+    private Set<Review> reviews;
 }
