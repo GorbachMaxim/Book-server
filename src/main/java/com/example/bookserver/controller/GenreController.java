@@ -1,23 +1,15 @@
 package com.example.bookserver.controller;
 
 import com.example.bookserver.dto.MessageResponse;
-import com.example.bookserver.dto.SignupRequest;
-import com.example.bookserver.dto.pojo.UserDTO;
-import com.example.bookserver.model.ERole;
 import com.example.bookserver.model.Genre;
-import com.example.bookserver.model.Role;
-import com.example.bookserver.model.User;
 import com.example.bookserver.service.GenreService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/genre")

@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
@@ -59,4 +59,60 @@ public class ApodController {
         }
         return apod;
     }
+
+//    public static void getAverageColor() throws IOException {
+//
+//        HttpURLConnection connection;
+//        URL url = new URL(urlString);
+//        connection = (HttpURLConnection) url.openConnection();
+//        connection.connect();
+//        InputStream stream = connection.getInputStream();
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+//        StringBuffer buffer = new StringBuffer();
+//        System.out.println(reader);
+//        String line = "";
+//        while ((line = reader.readLine()) != null) {
+//            buffer.append(line).append("\n");
+//        }
+//        apod = new Gson().fromJson(buffer.toString(), Apod.class);
+//
+//
+//
+//        URL imageUrl = new URL(apod.getUrl());
+//        InputStream is = imageUrl.openStream();
+//        OutputStream os = new FileOutputStream("images/image.jpg");
+//
+//        byte[] b = new byte[2048];
+//        int length;
+//
+//        while ((length = is.read(b)) != -1) {
+//            os.write(b, 0, length);
+//        }
+//
+//        is.close();
+//        os.close();
+//
+//
+//
+//        BufferedImage image = ImageIO.read(new File("images/image.jpg"));
+//
+//
+//        int[] color = new int[3];
+//        int x = (image.getWidth() * image.getHeight());
+//
+//
+//
+//
+//        for (int i = 0; i < image.getHeight(); ++i){
+//            for (int j = 0; j < image.getWidth(); ++j){
+//                Color r = new Color(image.getRGB(j, i));
+//                color[0] += r.getRed();
+//                color[1] += r.getGreen();
+//                color[2] += r.getBlue();
+//            }
+//        }
+//        System.out.println(color[0]/x+ ":" + color[1]/x + ":" + color[2]/x);
+//    }
+
+
 }

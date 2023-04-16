@@ -44,7 +44,7 @@ public class AuthorController {
 
     @PutMapping("/user")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateGenre(@RequestBody @Valid Author author){
+    public ResponseEntity<?> updateAuthor(@RequestBody @Valid Author author){
         Author author1 = authorService.getAuthorById(author.getId());
         if(!author.getName().isBlank())
             author1.setName(author.getName());

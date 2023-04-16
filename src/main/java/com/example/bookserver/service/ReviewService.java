@@ -7,6 +7,7 @@ import com.example.bookserver.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public class ReviewService {
     @Autowired
@@ -22,5 +23,17 @@ public class ReviewService {
         User user = userService.getUserFromJWT(request);
         review.setUser(user);
         bookRepository.save(book);
+    }
+
+    public List<Book> getAllReviews(){
+        return bookRepository.findByOrderByNameAsc();
+    }
+
+    public void saveOrUpdate(Book book){
+        bookRepository.save(book);
+    }
+
+    public void deleteBookById(long id){
+        bookRepository.deleteById(id);
     }
 }

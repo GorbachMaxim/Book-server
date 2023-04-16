@@ -22,8 +22,8 @@ public class AuthorService {
         return authorRepository.findByOrderByNameAsc();
     }
 
-    public void saveOrUpdate(Author Author){
-        authorRepository.save(Author);
+    public void saveOrUpdate(Author author){
+        authorRepository.save(author);
     }
 
     public void deleteAuthorById(long id){

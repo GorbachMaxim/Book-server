@@ -17,6 +17,7 @@ public class UserDTO {
     @NotBlank
     private String email;
 
+    private boolean isVerified;
 
     private Set<String> roles = new HashSet<>();
 
@@ -65,6 +66,14 @@ public class UserDTO {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
     }
 }
 
