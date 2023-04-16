@@ -37,6 +37,9 @@ public class EmailController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public @ResponseBody ResponseEntity sendSimpleEmail(HttpServletRequest request) {
         User user = userService.getUserFromJWT(request);
+        if (user.isVerified())
+            return new ResponseEntity<>("User already verified!", HttpStatus.BAD_REQUEST);
+
         try {
             String uuid = String.valueOf(UUID.randomUUID());
             String url = "http://localhost:8081/api/email/" + uuid;
