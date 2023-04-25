@@ -117,6 +117,12 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserDTO userDTO){
         User user = userService.getUserById(userDTO.getId());
+
+        if(user == null){
+            return (ResponseEntity<?>) ResponseEntity.badRequest();
+        }
+
+
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
 

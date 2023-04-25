@@ -2,15 +2,17 @@ package com.example.bookserver.controller;
 
 import com.example.bookserver.dto.Apod;
 import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
@@ -19,6 +21,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/apod")
 @CrossOrigin
+@RequiredArgsConstructor
 public class ApodController {
 
     private static final String key = "kNAFiMT8pFXeAOvjaEDaTdCNGDmgEq1AMcubiL5n";
@@ -26,21 +29,23 @@ public class ApodController {
 
     private static Apod apod;
 
+
     private static Date date;
 
     private static final long DIFFERENCE_IN_TIME = 43200000;
 
     @GetMapping
     public Apod getApod() throws IOException {
+
         Date currentDate = new Date();
 
-        if(date == null)
+        if (date == null)
             date = currentDate;
 
-        long difference = currentDate.getTime()-date.getTime();
+        long difference = currentDate.getTime() - date.getTime();
         System.out.println(difference);
 
-        if(apod == null || difference>DIFFERENCE_IN_TIME) {
+        if (apod == null || difference > DIFFERENCE_IN_TIME) {
             date = currentDate;
             HttpURLConnection connection;
             URL url = new URL(urlString);

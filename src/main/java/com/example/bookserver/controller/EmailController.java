@@ -2,7 +2,6 @@ package com.example.bookserver.controller;
 
 import com.example.bookserver.model.User;
 import com.example.bookserver.service.EmailService;
-
 import com.example.bookserver.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +12,7 @@ import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -44,7 +41,8 @@ public class EmailController {
             String uuid = String.valueOf(UUID.randomUUID());
             String url = "http://localhost:8081/api/email/" + uuid;
             usersWaitingForVerification.put(uuid, user);
-            emailService.sendSimpleEmail(user.getEmail(), "Account verification", url);
+            String message = "Для подтверждения вашего аккаунта пройдите по ссылке:\n\n" + url;
+            emailService.sendSimpleEmail(user.getEmail(), "Account verification", message);
         } catch (MailException mailException) {
             LOG.error("Error while sending out email..{}", mailException.getStackTrace());
             return new ResponseEntity<>("Unable to send email", HttpStatus.INTERNAL_SERVER_ERROR);

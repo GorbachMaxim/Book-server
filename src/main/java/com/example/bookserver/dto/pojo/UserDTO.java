@@ -1,6 +1,7 @@
 package com.example.bookserver.dto.pojo;
 
 import com.example.bookserver.model.Role;
+import com.example.bookserver.model.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -33,6 +34,16 @@ public class UserDTO {
         this.username = username;
         this.email = email;
         this.roles = set;
+    }
+
+    public UserDTO(User user) {
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        user.getRoles().forEach(role -> {
+            this.roles.add(role.toString());
+        });
+        this.isVerified = user.isVerified();
+        this.id = user.getId();
     }
 
 

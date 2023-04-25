@@ -42,10 +42,15 @@ public class AuthorController {
         return ResponseEntity.ok(new MessageResponse("Author CREATED"));
     }
 
-    @PutMapping("/user")
+    @PutMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateAuthor(@RequestBody @Valid Author author){
         Author author1 = authorService.getAuthorById(author.getId());
+
+        if(author1 == null){
+            return (ResponseEntity<?>) ResponseEntity.badRequest();
+        }
+
         if(!author.getName().isBlank())
             author1.setName(author.getName());
         if(!author.getSurname().isBlank())
@@ -54,6 +59,12 @@ public class AuthorController {
             author1.setBiography(author.getBiography());
         if(!author.getImage().isBlank())
             author1.setImage(author.getImage());
+
+//        author1.setName(author.getName());
+//        author1.setSurname(author.getSurname());
+//        author1.setBiography(author.getBiography());
+//        author1.setImage(author.getImage());
+
         authorService.saveOrUpdate(author1);
         return ResponseEntity.ok(new MessageResponse("Author UPDATED"));
     }

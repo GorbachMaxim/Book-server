@@ -24,6 +24,10 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
+
     private String ISBN;
 
     @Column(columnDefinition="VARCHAR")

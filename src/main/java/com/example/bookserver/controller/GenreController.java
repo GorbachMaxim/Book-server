@@ -46,12 +46,19 @@ public class GenreController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateGenre(@RequestBody @Valid Genre genre){
         Genre genre1 = genreService.getGenreById(genre.getId());
+
+        if(genre1 == null){
+            return (ResponseEntity<?>) ResponseEntity.badRequest();
+        }
+
+
         if(!genre.getName().isBlank())
             genre1.setName(genre.getName());
         if(!genre.getDescription().isBlank())
             genre1.setDescription(genre.getDescription());
         if(!genre.getImage().isBlank())
             genre1.setImage(genre.getImage());
+
         genreService.saveOrUpdate(genre1);
         return ResponseEntity.ok(new MessageResponse("Genre UPDATED"));
     }

@@ -4,21 +4,22 @@ package com.example.bookserver.service;
 import com.example.bookserver.model.Book;
 import com.example.bookserver.model.Review;
 import com.example.bookserver.repository.BookRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     public Book getBookById(long id){
         return bookRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public List<Book> getAllUsers(){
+    public List<Book> getAllBooks(){
         return bookRepository.findAll();
     }
 
