@@ -1,5 +1,7 @@
 package com.example.bookserver.model;
 
+import com.example.bookserver.dto.pojo.ReviewDTO;
+import com.example.bookserver.dto.pojo.UserDTO;
 import lombok.Data;
 
 import javax.persistence.*;

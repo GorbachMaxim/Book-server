@@ -70,7 +70,7 @@ public class BookController {
 
     @PutMapping
     @PreAuthorize("hasRole('ADMIN')")//не работает на обзоры
-    public ResponseEntity<?> updateAuthor(@RequestBody @Valid Book book){
+    public ResponseEntity<?> updateBook(@RequestBody @Valid Book book){
         Book book1 = bookService.getBookById(book.getId());
         book1.setName(book.getName());
         book1.setISBN(book.getISBN());

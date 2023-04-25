@@ -5,6 +5,7 @@ import com.example.bookserver.model.Book;
 import com.example.bookserver.model.Genre;
 import com.example.bookserver.model.Review;
 import lombok.Data;
+import org.apache.commons.math3.util.Precision;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -42,6 +43,7 @@ public class BookDTO {
             reviews.add(new ReviewDTO(review));
             avgScore += review.getMark();
         });
-        avgScore /= reviews.size();
+        Double averageMark = Precision.round(avgScore / reviews.size(), 2);
+        avgScore = averageMark.doubleValue();
     }
 }
