@@ -35,6 +35,9 @@ public class GenreController {
         return genre;
     }
 
+
+
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addGenre(@RequestBody @Valid Genre genre) {
@@ -48,7 +51,7 @@ public class GenreController {
         Genre genre1 = genreService.getGenreById(genre.getId());
 
         if(genre1 == null){
-            return (ResponseEntity<?>) ResponseEntity.badRequest();
+            return ResponseEntity.badRequest().body(new MessageResponse("No such Genre"));
         }
 
 

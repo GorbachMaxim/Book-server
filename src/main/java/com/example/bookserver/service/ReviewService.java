@@ -25,12 +25,15 @@ public class ReviewService {
     private UserDetailsServiceImpl userService;
 
 
-    public void addReview(HttpServletRequest request, Review review, long id){
+    public void addReview(HttpServletRequest request, Review review, long id) throws IllegalAccessException {
         Book book = bookRepository.findById(id).orElseThrow(NullPointerException::new);
         User user = userService.getUserFromJWT(request);
         review.setBook(book);
         review.setUser(user);
-        reviewRepository.save(review);
+        if(user.isVerified())
+            reviewRepository.save(review);
+        else
+            throw new IllegalAccessException("User not verified!");
     }
 
     public List<Review> getReviewsByBookId(long id){

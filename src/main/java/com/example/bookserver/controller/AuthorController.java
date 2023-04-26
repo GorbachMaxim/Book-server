@@ -48,7 +48,7 @@ public class AuthorController {
         Author author1 = authorService.getAuthorById(author.getId());
 
         if(author1 == null){
-            return (ResponseEntity<?>) ResponseEntity.badRequest();
+            return ResponseEntity.badRequest().body(new MessageResponse("No such Author"));
         }
 
         if(!author.getName().isBlank())
