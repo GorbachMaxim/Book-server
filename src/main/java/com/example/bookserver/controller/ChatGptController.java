@@ -1,7 +1,6 @@
 package com.example.bookserver.controller;
 
 import com.example.bookserver.dto.ChatGptMessageResponse;
-import com.example.bookserver.dto.MessageResponse;
 import com.example.bookserver.model.Book;
 import com.example.bookserver.service.BookService;
 import io.github.flashvayne.chatgpt.service.ChatgptService;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -38,12 +36,16 @@ public class ChatGptController {
     public ResponseEntity<?> chatGPT(){
         List<Book> books = bookService.getAllBooks();
 
-
-
         Book book = getRandomElement(books);
+
         System.err.println(book.getName());
         String responseMessage = chatgptService.sendMessage("Красочно порекомендуй книгу " + book.getName());
         responseMessage = responseMessage.replaceAll("\n|\r\n", "");
+        //responseMessage += chatgptService.sendMessage("Продолжи сообщение: " + responseMessage);
+
+
+        int i = responseMessage.lastIndexOf('.');
+        responseMessage = responseMessage.substring(0, i+1);
         return ResponseEntity.ok(new ChatGptMessageResponse(responseMessage, book));
     }
 
