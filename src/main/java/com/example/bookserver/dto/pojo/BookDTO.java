@@ -8,6 +8,7 @@ import lombok.Data;
 import org.apache.commons.math3.util.Precision;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -28,7 +29,7 @@ public class BookDTO {
 
     private double avgScore;
 
-    private Set<ReviewDTO> reviews;
+    private Set<ReviewDTO> reviews = new HashSet<>();
 
     public BookDTO(Book book){
         this.id = book.getId();
@@ -39,11 +40,13 @@ public class BookDTO {
         this.author = book.getAuthor();
         this.genre = book.getGenre();
         avgScore = 0;
-        book.getReviews().forEach(review ->{
-            reviews.add(new ReviewDTO(review));
-            avgScore += review.getMark();
-        });
-        Double averageMark = Precision.round(avgScore / reviews.size(), 2);
-        avgScore = averageMark.doubleValue();
+        if ( reviews.size()>0){
+            book.getReviews().forEach(review ->{
+                reviews.add(new ReviewDTO(review));
+                avgScore += review.getMark();
+            });
+            Double averageMark = Precision.round(avgScore / reviews.size(), 2);
+            avgScore = averageMark.doubleValue();
+        }
     }
 }

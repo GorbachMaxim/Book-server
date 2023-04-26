@@ -55,6 +55,30 @@ public class BookController {
         return new BookDTO(book);
     }
 
+    @GetMapping("/author/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public List<BookDTO> getBookByAuthor(@PathVariable long id){
+        List<Book> books = bookService.getBooksByAuthorId(id);
+        List<BookDTO> bookDTOS = new ArrayList<>();
+        books.forEach(book->{
+            bookDTOS.add(new BookDTO(book));
+        });
+        return bookDTOS;
+    }
+
+
+    @GetMapping("genre/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public List<BookDTO> getBookByGenre(@PathVariable long id){
+        List<Book> books = bookService.getBooksByGenreId(id);
+        List<BookDTO> bookDTOS = new ArrayList<>();
+        books.forEach(book->{
+            bookDTOS.add(new BookDTO(book));
+        });
+        return bookDTOS;
+    }
+
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addBook(@RequestBody @Valid Book book) {

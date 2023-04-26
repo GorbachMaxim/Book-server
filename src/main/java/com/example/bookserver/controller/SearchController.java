@@ -38,10 +38,13 @@ public class SearchController {
                 searchedBooks.add(bookDTO);
             else if(performKMPSearch(bookDTO.getDescription(), search).size()>0)
                 searchedBooks.add(bookDTO);
+            else if(performKMPSearch(bookDTO.getISBN(), search).size()>0)
+                searchedBooks.add(bookDTO);
             else if(performKMPSearch(bookDTO.getAuthor().getName(), search).size()>0)
                 searchedBooks.add(bookDTO);
             else if(performKMPSearch(bookDTO.getGenre().getName(), search).size()>0)
                 searchedBooks.add(bookDTO);
+
         });
 
         bookDTOS.forEach(bookDTO -> {

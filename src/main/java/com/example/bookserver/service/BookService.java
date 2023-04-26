@@ -19,6 +19,14 @@ public class BookService {
         return bookRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    public List<Book> getBooksByGenreId(long id){
+        return bookRepository.findBooksByGenre_Id(id);
+    }
+
+    public List<Book> getBooksByAuthorId(long id){
+        return bookRepository.findBooksByAuthor_Id(id);
+    }
+
     public List<Book> getAllBooks(){
         return bookRepository.findAll();
     }
