@@ -54,6 +54,15 @@ public class UserController {
         return user;
     }
 
+    @GetMapping("/account")
+    @PreAuthorize("hasRole('ADMIN')")
+    public User getYourUser(HttpServletRequest request){
+        User user = userService.getUserFromJWT(request);
+        user.setReadBooks(null);
+        user.setPassword(null);
+        return user;
+    }
+
     @GetMapping("readbook/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Set<Book> getReadBooks(@PathVariable long id){

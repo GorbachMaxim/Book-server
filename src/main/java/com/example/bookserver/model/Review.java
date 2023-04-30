@@ -22,6 +22,7 @@ public class Review {
     @Max(5)
     private int mark;
 
+    @Column(columnDefinition="VARCHAR")
     private String text;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -66,7 +66,7 @@ public class AuthController {
 		return ResponseEntity.ok(new JwtResponse(jwt,
 				userDetails.getId(), 
 				userDetails.getUsername(), 
-				userDetails.getEmail(), 
+				userDetails.getEmail(),
 				roles));
 	}
 	
@@ -90,13 +90,13 @@ public class AuthController {
 				passwordEncoder.encode(signupRequest.getPassword()));
 		
 		Set<String> reqRoles = signupRequest.getRoles();
-		Set<Role> roles = new HashSet<>();
+		Set<Role> roles1 = new HashSet<>();
 		
 		if (reqRoles == null) {
 			Role userRole = roleRepository
 					.findByName(ERole.ROLE_USER)
 					.orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
-			roles.add(userRole);
+			roles1.add(userRole);
 		} else {
 			reqRoles.forEach(r -> {
 				switch (r) {
@@ -104,7 +104,7 @@ public class AuthController {
 					Role adminRole = roleRepository
 						.findByName(ERole.ROLE_ADMIN)
 						.orElseThrow(() -> new RuntimeException("Error, Role ADMIN is not found"));
-					roles.add(adminRole);
+					roles1.add(adminRole);
 					
 					break;
 
@@ -112,12 +112,30 @@ public class AuthController {
 					Role userRole = roleRepository
 						.findByName(ERole.ROLE_USER)
 						.orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
-					roles.add(userRole);
+					roles1.add(userRole);
 				}
 			});
 		}
-		user.setRoles(roles);
+		user.setRoles(roles1);
 		userRepository.save(user);
-		return ResponseEntity.ok(new MessageResponse("User CREATED"));
+
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(
+						signupRequest.getUsername(),
+						signupRequest.getPassword()));
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateJwtToken(authentication);
+
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+		List<String> roles = userDetails.getAuthorities().stream()
+				.map(item -> item.getAuthority())
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok(new JwtResponse(jwt,
+				userDetails.getId(),
+				userDetails.getUsername(),
+				userDetails.getEmail(),
+				roles));
 	}
 }
