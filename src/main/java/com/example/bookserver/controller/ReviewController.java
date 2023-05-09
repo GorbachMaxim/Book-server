@@ -37,6 +37,18 @@ public class ReviewController {
         return reviewDTOS;
     }
 
+    @PostMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> addReview(HttpServletRequest request, @PathVariable long id, @RequestBody @Valid Review review) {
+
+        try {
+            reviewService.addReview(request, review, id);
+        }catch (IllegalAccessException ex){
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Review CREATED"));
+    }
 
 
 
