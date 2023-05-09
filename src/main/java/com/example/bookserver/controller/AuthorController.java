@@ -51,13 +51,13 @@ public class AuthorController {
             return ResponseEntity.badRequest().body(new MessageResponse("No such Author"));
         }
 
-        if(!author.getName().isBlank())
+        //if(!author.getName().isBlank())
             author1.setName(author.getName());
-        if(!author.getSurname().isBlank())
+        //if(!author.getSurname().isBlank())
             author1.setSurname(author.getSurname());
-        if(!author.getBiography().isBlank())
+        //if(!author.getBiography().isBlank())
             author1.setBiography(author.getBiography());
-        if(!author.getImage().isBlank())
+        //if(!author.getImage().isBlank())
             author1.setImage(author.getImage());
 
 //        author1.setName(author.getName());

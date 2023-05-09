@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/account")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public User getYourUser(HttpServletRequest request){
         User user = userService.getUserFromJWT(request);
         user.setReadBooks(null);

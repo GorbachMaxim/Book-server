@@ -11,9 +11,11 @@ import java.util.List;
 
 @Service
 public class AuthorService {
-    @Autowired
-    private AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
 
+    public AuthorService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
 
 
     public Author getAuthorById(long id){

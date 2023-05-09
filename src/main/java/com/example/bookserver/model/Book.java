@@ -1,5 +1,6 @@
 package com.example.bookserver.model;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
@@ -37,5 +38,19 @@ public class Book {
     private String image;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Review> reviews;
+    private List<Review> reviews;
+
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author=" + author +
+                ", genre=" + genre +
+                ", ISBN='" + ISBN + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }

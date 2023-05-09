@@ -44,7 +44,7 @@ public class User {
     @JoinTable (name="read_books",
             joinColumns=@JoinColumn (name="user_id"),
             inverseJoinColumns=@JoinColumn(name="book_id"))
-    private Set<Book> readBooks;
+    private Set<Book> readBooks = new HashSet<>();
 
     public User() {
         isVerified = false;
