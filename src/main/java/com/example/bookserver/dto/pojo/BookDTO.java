@@ -40,7 +40,7 @@ public class BookDTO {
         this.author = book.getAuthor();
         this.genre = book.getGenre();
         avgScore = 0;
-        if ( reviews.size()>0){
+        if (book.getReviews().size()>0){
             book.getReviews().forEach(review ->{
                 reviews.add(new ReviewDTO(review));
                 avgScore += review.getMark();
