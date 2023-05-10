@@ -3,6 +3,7 @@ package com.example.bookserver.controller;
 import com.example.bookserver.dto.MessageResponse;
 import com.example.bookserver.dto.Password;
 import com.example.bookserver.dto.SignupRequest;
+import com.example.bookserver.dto.pojo.BookDTO;
 import com.example.bookserver.dto.pojo.UserDTO;
 import com.example.bookserver.model.Book;
 import com.example.bookserver.model.ERole;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,9 +67,13 @@ public class UserController {
 
     @GetMapping("readbook/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Set<Book> getReadBooks(@PathVariable long id){
+    public Set<BookDTO> getReadBooks(@PathVariable long id){
         User user = userService.getUserById(id);
-        return user.getReadBooks();
+        Set<BookDTO> list = new HashSet<>();
+        user.getReadBooks().forEach(book ->{
+            list.add(new BookDTO(book));
+        });
+        return list;
     }
 
     @PostMapping("/user")
