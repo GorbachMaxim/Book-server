@@ -39,7 +39,7 @@ public class ReviewController {
 
     @PostMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> addReview(HttpServletRequest request, @PathVariable long id, @RequestBody @Valid Review review) {
+    public ResponseEntity<?> addReview(HttpServletRequest request, @PathVariable long id, @RequestBody @Valid ReviewDTO review) {
 
         try {
             reviewService.addReview(request, review, id);
@@ -54,7 +54,7 @@ public class ReviewController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> deleteGenre(HttpServletRequest request, @PathVariable long id){
+    public ResponseEntity<?> deleteReview(HttpServletRequest request, @PathVariable long id){
         reviewService.deleteReviewById(request, id);
         return ResponseEntity.ok(new MessageResponse("Review DELETED"));
     }

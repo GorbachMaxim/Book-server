@@ -8,7 +8,9 @@ import lombok.Data;
 import org.apache.commons.math3.util.Precision;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -29,7 +31,7 @@ public class BookDTO {
 
     private double avgScore;
 
-    private Set<ReviewDTO> reviews = new HashSet<>();
+    private List<ReviewDTO> reviews = new ArrayList<>();
 
     public BookDTO(Book book){
         this.id = book.getId();

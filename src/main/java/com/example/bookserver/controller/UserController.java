@@ -138,28 +138,6 @@ public class UserController {
         }
 
 
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
-
-        if (userDTO.getRoles().size() != 0) {
-            user.setRoles(new HashSet<>());
-            userDTO.getRoles().forEach(r -> {
-                switch (r) {
-                    case "admin":
-                        Role adminRole = roleRepository
-                                .findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error, Role ADMIN is not found"));
-                        user.getRoles().add(adminRole);
-                        break;
-                    default:
-                        Role userRole = roleRepository
-                                .findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
-                        user.getRoles().add(userRole);
-                        break;
-                }
-            });
-        }
         userService.saveOrUpdate(user);
         return ResponseEntity.ok(new MessageResponse("User UPDATED"));
     }

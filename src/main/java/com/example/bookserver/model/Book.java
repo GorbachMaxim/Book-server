@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,12 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Review> reviews;
+
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable (name="review",
+//            joinColumns=@JoinColumn (name="user_id"),
+//            inverseJoinColumns=@JoinColumn(name="book_id"))
+//    private List<Review> reviews;
 
 
     @Override

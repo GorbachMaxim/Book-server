@@ -41,7 +41,7 @@ public class ChatGptController {
         System.err.println(book.getName());
         String responseMessage = chatgptService.sendMessage("Красочно порекомендуй книгу " + book.getName());
         responseMessage = responseMessage.replaceAll("\n|\r\n", "");
-        //responseMessage += chatgptService.sendMessage("Продолжи сообщение: " + responseMessage);
+        responseMessage += chatgptService.sendMessage("Продолжи сообщение: " + responseMessage);
 
 
         int i = responseMessage.lastIndexOf('.');
